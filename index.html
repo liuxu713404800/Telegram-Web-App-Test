@@ -160,36 +160,74 @@
     <script>eruda.init();</script>
 
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+    <!-- <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script> -->
     <script src="https://unpkg.com/tonweb@0.0.41/dist/tonweb.js"></script>
 
     <div id="ton-connect"></div>
 
     <script>
 
-        window.connector = new TonConnectSDK.TonConnect({manifestUrl: 'https://liuxu713404800.github.io/Telegram-Web-App-Test/tonconnect-manifest.json'});
-        connector.restoreConnection();
-        console.log(connector);
-        console.log(connector.wallet);
-        console.log(connector.wallet.account);
-        console.log(connector.wallet.account.address);
-
-        console.log(await connector.sendTransaction({
-            validUntil: Math.floor(new Date() / 1000) + 360,
-            messages: [{
-                    address: connector.wallet.account.address,
-                    amount: "200000000"
-                },{
-                    address: "0:b2a1ecf5545e076cd36ae516ea7ebdf32aea008caa2b84af9866becb208895ad",
-                    amount: "100000000"
-                }
-            ]
-        }));
-
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            // manifestUrl: 'https://localhost/tonconnect-manifest.json',
             manifestUrl: 'https://liuxu713404800.github.io/Telegram-Web-App-Test/tonconnect-manifest.json',
             buttonRootId: 'ton-connect'
         });
+
+
+        // //另一种链接方式
+        // const connector = new TonConnectSDK.TonConnect({manifestUrl: 'https://localhost/tonconnect-manifest.json'});
+        // connector.restoreConnection();
+
+
+        // 查看钱包状态
+        async function connectToWallet() {
+            const walletsList = await tonConnectUI.getWallets();
+            console.log(walletsList);
+        }    
+        connectToWallet();
+        
+
+        // // 查看modal状态
+        // async function testModal() {
+        //     await tonConnectUI.openModal();
+        //     const currentModalState = tonConnectUI.modalState;
+        //     console.log(currentModalState);
+        // }
+        // testModal();
+
+
+        // // 监控状态
+        // const unsubscribeModal = tonConnectUI.onModalStateChange(
+        //     (state) => {
+        //         // update state/reactive variables to show updates in the ui
+        //         // state.status will be 'opened' or 'closed'
+        //         // if state.status is 'closed', you can check state.closeReason to find out the reason
+        //         console.log(state);
+        //     }
+        // );
+        // unsubscribeModal();
+
+
+        
+        // tonConnectUI.openSingleWalletModal('telegram-wallet');
+        async function testWallet(params) {
+            // await tonConnectUI.openModal();
+            // await tonConnectUI.openSingleWalletModal('telegram-wallet');
+            // // console.log(myWallet);
+            // const currentState = tonConnectUI.singleWalletModalState;
+            // console.log('Current modal state:', currentState);
+            // const currentWallet = tonConnectUI.wallet;
+            // console.log('Current currentWallet', currentWallet);
+            // const currentWalletInfo = tonConnectUI.walletInfo;
+            // console.log('Current currentWalletInfo:', currentWalletInfo);
+            // const currentAccount = tonConnectUI.account;
+            // console.log('Current currentAccount:', currentAccount);
+            // const currentIsConnectedStatus = tonConnectUI.connected;
+            // console.log('Current currentIsConnectedStatus:', currentIsConnectedStatus);
+        }
+        
+        testWallet();
+
     </script>
 
 
