@@ -160,10 +160,32 @@
     <script>eruda.init();</script>
 
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+    <script src="https://unpkg.com/tonweb@0.0.41/dist/tonweb.js"></script>
 
     <div id="ton-connect"></div>
 
     <script>
+
+        window.connector = new TonConnectSDK.TonConnect({manifestUrl: 'https://liuxu713404800.github.io/Telegram-Web-App-Test/tonconnect-manifest.json'});
+        connector.restoreConnection();
+        console.log(connector);
+        console.log(connector.wallet);
+        console.log(connector.wallet.account);
+        console.log(connector.wallet.account.address);
+
+        console.log(await connector.sendTransaction({
+            validUntil: Math.floor(new Date() / 1000) + 360,
+            messages: [{
+                    address: connector.wallet.account.address,
+                    amount: "200000000"
+                },{
+                    address: "0:b2a1ecf5545e076cd36ae516ea7ebdf32aea008caa2b84af9866becb208895ad",
+                    amount: "100000000"
+                }
+            ]
+        }));
+
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://liuxu713404800.github.io/Telegram-Web-App-Test/tonconnect-manifest.json',
             buttonRootId: 'ton-connect'
