@@ -67,30 +67,15 @@
         <div align="center">
             <a href="https://ton.org/"><img width="48" src="./assets/tapps.png" alt="logo of telegram web apps"></a>
         </div>
-        <h1>Modals</h1>
-        <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
-        <button onclick="showPopup();">Launch Popup</button>
 
         <h1>Links</h1>
         <ul>
             <li>
-                <a href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/LiuXuTestBot');">Open link within Telegram</a>
-            </li>
-            <li>
-                <a href="javascript:Telegram.WebApp.openLink('https://ton.org/');">Open link in external browser</a>
-            </li>
-            <li>
-                <a href="javascript:Telegram.WebApp.openLink('https://telegra.ph/api',{try_instant_view:true});">Open link inside Telegram webview</a>
+                <a href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/LiuXuTestBot/TestToncoin');">Open link within Telegram</a>
             </li>
         </ul>
-
-        <h1>Buttons</h1>
-        <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
-        <button onclick="toggleMainButton();">Toggle Main Button</button>
+        <button onclick="transaction">Send Ton</button>
     </main>
-    <div id="viewport"></div>
-    <div id="viewport-params-size"></div>
-    <div id="viewport-params-expand"></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         // Init TWA
@@ -161,7 +146,7 @@
 
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <!-- <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script> -->
-    <script src="https://unpkg.com/tonweb@0.0.41/dist/tonweb.js"></script>
+    <!-- <script src="https://unpkg.com/tonweb@0.0.41/dist/tonweb.js"></script> -->
 
     <div id="ton-connect"></div>
 
@@ -178,13 +163,43 @@
         // const connector = new TonConnectSDK.TonConnect({manifestUrl: 'https://localhost/tonconnect-manifest.json'});
         // connector.restoreConnection();
 
+        async function connectToWallet() {
+            const connectedWallet = await tonConnectUI.connectWallet();
+            // Do something with connectedWallet if needed
+            console.log(connectedWallet);
+        }
+
+        // Call the function
+        connectToWallet().catch(error => {
+            console.error("Error connecting to wallet:", error);
+        });
 
         // 查看钱包状态
-        async function connectToWallet() {
+        async function testWalletList() {
             const walletsList = await tonConnectUI.getWallets();
             console.log(walletsList);
         }    
-        connectToWallet();
+        testWalletList();
+
+
+        async function transaction() {
+            console.log("begin send ton");
+            const transaction = {
+                messages: [
+                    {
+                        address: "UQCicdRNqeG2_gdoZ7I26bGqlEYbW4jKS5enIpDRVcCn89UN0", // destination address
+                        amount: "1000000" //Toncoin in nanotons
+                    }
+                ]
+            };
+
+            try {
+                await tonConnectUI.sendTransaction(transaction);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        
         
 
         // // 查看modal状态
