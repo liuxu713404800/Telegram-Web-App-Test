@@ -74,7 +74,7 @@
                 <a href="javascript:Telegram.WebApp.openTelegramLink('https://t.me/LiuXuTestBot/TestToncoin');">Open link within Telegram</a>
             </li>
         </ul>
-        <button onclick="transaction">Send Ton</button>
+        <button onclick="transaction()">Send Ton</button>
     </main>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -174,12 +174,13 @@
             console.error("Error connecting to wallet:", error);
         });
 
+
         // 查看钱包状态
-        async function testWalletList() {
-            const walletsList = await tonConnectUI.getWallets();
-            console.log(walletsList);
-        }    
-        testWalletList();
+        // async function testWalletList() {
+        //     const walletsList = await tonConnectUI.getWallets();
+        //     console.log(walletsList);
+        // }    
+        // testWalletList();
 
 
         async function transaction() {
